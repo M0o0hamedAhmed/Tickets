@@ -13,46 +13,49 @@
 
     <!-- Create Or Edit Modal -->
     <x-modals.modal-edit-create :$title></x-modals.modal-edit-create>
-        <div class="col-md-4">
-            <!-- Widget: user widget style 2 -->
-            <div class="card card-widget widget-user-2">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-warning bf">
-                    <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username">{{$ticket->subject}}</h3>
-                </div>
-                <div class="card-footer p-0">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a  class="nav-link">
-                                Status <span class="float-right badge {{$ticket->sub_type->background()}}">{{$ticket->sub_type->name}}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link">
-                                Type <span class="float-right badge bg-info">{{$ticket->type->name}}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link">
-                                Client Name <span class="float-right badge bg-success">{{$ticket->client_id}}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link">
-                                Issued Date <span class="float-right badge bg-danger">{{$ticket->created_at->diffForHumans()}}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link">
-                                Closed Date <span class="float-right badge bg-danger">{{$ticket->closed_at?->diffForHumans()}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="col-md-4">
+        <!-- Widget: user widget style 2 -->
+        <div class="card card-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-warning bf">
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">{{$ticket->subject}}</h3>
             </div>
-            <!-- /.widget-user -->
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Status <span
+                                class="float-right badge {{$ticket->sub_type->background()}}">{{$ticket->sub_type->name}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Type <span class="float-right badge bg-info">{{$ticket->type->name}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Client Name <span class="float-right badge bg-success">{{$ticket->client_id}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Issued Date <span
+                                class="float-right badge bg-danger">{{$ticket->created_at->diffForHumans()}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Closed Date <span
+                                class="float-right badge bg-danger">{{$ticket->closed_at?->diffForHumans()}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <!-- /.widget-user -->
+    </div>
 
     <!-- Create Or Edit Modal -->
     <div class="row">
@@ -92,17 +95,28 @@
     </div>
     <div>
         @if($ticket->sub_type->isOpen())
-        <form method="POST" action="{{route('dashboard.tickets.update',$ticket->id)}}">
-            @csrf
-            @method('PUT')
-            <div class="card-body">
-                <x-forms.inputs.message></x-forms.inputs.message>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-primary">اضافة</button>
-
+            <form method="POST" action="{{route('dashboard.tickets.update',$ticket->id)}}">
+                @csrf
+                @method('PUT')
+                <div class="card-body">
+                    <x-forms.inputs.message></x-forms.inputs.message>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-primary">اضافة</button>
+                    </div>
                 </div>
+            </form>
+        @else
+            <div class="col-12">
+                <div class="info-box shadow-lg">
+                    <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Unfortunately, you are unable to create replies at this time. The ticket status must be 'open' in order to create a reply</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
             </div>
-        </form>
         @endif
     </div>
 
